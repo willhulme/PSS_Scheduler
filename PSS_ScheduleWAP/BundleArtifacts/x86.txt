@@ -1,0 +1,2 @@
+MainPackage=C:\Users\Will\Documents\msgraph-training-uwp\GraphTutorialWAP\bin\x86\Debug\GraphTutorialWAP_1.0.11.0_x86_Debug.msix
+SymbolPackage=C:\Users\Will\Documents\msgraph-training-uwp\GraphTutorialWAP\obj\x86\Debug\Symbols\GraphTutorialWAP_1.0.11.0_x86_Debug.appxsym
