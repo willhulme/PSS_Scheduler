@@ -11,88 +11,88 @@ namespace ConsoleApp4
     {
         static void Main()
         {
-            // Data.
-            int[,] costs = {
-            { 90, 80, 75, 70 }, { 35, 85, 55, 65 }, { 125, 95, 90, 95 }, { 45, 110, 95, 115 }, { 50, 100, 90, 100 },
+            // Data from SQL.
+            int[,] kits = {
+            { 900, 800, 750, 700 }, { 350, 850, 550, 650 }, { 1250, 950, 900, 950 }, { 450, 1100, 950, 1150 }, { 500, 1000, 900, 1000 },
         };
-            int numWorkers = costs.GetLength(0);
-            int numTasks = costs.GetLength(1);
+            int numWorkers = kits.GetLength(0);
+            int numJobs = kits.GetLength(1);
 
             // Model.
-            CpModel model = new CpModel();
+            CpModel cpModel = new CpModel();
 
             // Variables.
-            IntVar[,] x = new IntVar[numWorkers, numTasks];
+            IntVar[,] x = new IntVar[numWorkers, numJobs];
             // Variables in a 1-dim array.
-            IntVar[] xFlat = new IntVar[numWorkers * numTasks];
-            int[] costsFlat = new int[numWorkers * numTasks];
+            IntVar[] xFlat = new IntVar[numWorkers * numJobs];
+            int[] costsFlat = new int[numWorkers * numJobs];
             for (int i = 0; i < numWorkers; ++i)
             {
-                for (int j = 0; j < numTasks; ++j)
+                for (int j = 0; j < numJobs; ++j)
                 {
-                    x[i, j] = model.NewIntVar(0, 1, $"worker_{i}_task_{j}");
-                    int k = i * numTasks + j;
+                    x[i, j] = cpModel.NewIntVar(0, 1, $"worker_{i}_task_{j}");
+                    int k = i * numJobs + j;
                     xFlat[k] = x[i, j];
-                    costsFlat[k] = costs[i, j];
+                    costsFlat[k] = kits[i, j];
                 }
             }
 
-            // Constraints
+            // The Constraints:
             // Each worker is assigned to at most one task.
             for (int i = 0; i < numWorkers; ++i)
             {
-                IntVar[] vars = new IntVar[numTasks];
-                for (int j = 0; j < numTasks; ++j)
+                IntVar[] vars = new IntVar[numJobs];
+                for (int j = 0; j < numJobs; ++j)
                 {
                     vars[j] = x[i, j];
                 }
-                model.Add(LinearExpr.Sum(vars) <= 1);
+                cpModel.Add(LinearExpr.Sum(vars) <= 1);
             }
 
             // Each task is assigned to exactly one worker.
-            for (int j = 0; j < numTasks; ++j)
+            for (int j = 0; j < numJobs; ++j)
             {
                 IntVar[] vars = new IntVar[numWorkers];
                 for (int i = 0; i < numWorkers; ++i)
                 {
                     vars[i] = x[i, j];
                 }
-                model.Add(LinearExpr.Sum(vars) == 1);
+                cpModel.Add(LinearExpr.Sum(vars) == 1);
             }
 
             // Objective
-            model.Minimize(LinearExpr.ScalProd(xFlat, costsFlat));
+            cpModel.Minimize(LinearExpr.ScalProd(xFlat, costsFlat));
 
             // Solve
-            CpSolver solver = new CpSolver();
-            CpSolverStatus status = solver.Solve(model);
+            CpSolver cpSolver = new CpSolver();
+            CpSolverStatus status = cpSolver.Solve(cpModel);
             Console.WriteLine($"Solve status: {status}");
 
             // Print solution.
             // Check that the problem has a feasible solution.
             if (status == CpSolverStatus.Optimal || status == CpSolverStatus.Feasible)
             {
-                Console.WriteLine($"Total cost: {solver.ObjectiveValue}\n");
+                Console.WriteLine($"Total cost: {cpSolver.ObjectiveValue}\n");
                 for (int i = 0; i < numWorkers; ++i)
                 {
-                    for (int j = 0; j < numTasks; ++j)
+                    for (int j = 0; j < numJobs; ++j)
                     {
-                        if (solver.Value(x[i, j]) > 0.5)
+                        if (cpSolver.Value(x[i, j]) > 0.5)
                         {
-                            Console.WriteLine($"Worker {i} assigned to task {j}. Cost: {costs[i, j]}");
+                            Console.WriteLine($"Worker {i} assigned to kit {j}. Cost: {kits[i, j]}");
                         }
                     }
                 }
             }
             else
             {
-                Console.WriteLine("No solution found.");
+                Console.WriteLine("No solution could be found.");
             }
 
             Console.WriteLine("Statistics");
-            Console.WriteLine($"  - conflicts : {solver.NumConflicts()}");
-            Console.WriteLine($"  - branches  : {solver.NumBranches()}");
-            Console.WriteLine($"  - wall time : {solver.WallTime()}s");
+            Console.WriteLine($"  conflicts : {cpSolver.NumConflicts()}");
+            Console.WriteLine($"  branches  : {cpSolver.NumBranches()}");
+            Console.WriteLine($"  wall time : {cpSolver.WallTime()}s");
         }
     }
 }

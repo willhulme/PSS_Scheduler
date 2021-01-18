@@ -35,6 +35,16 @@ namespace PSS_Schedule
                 HomePageMessage.Text = "Welcome! Please use the menu to the left to select a view.";
             }
         }
+
+        private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void HomePageMessage_Copy_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
         // </ConstructorSnippet>
     }
 }

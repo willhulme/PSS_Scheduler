@@ -64,7 +64,7 @@
     <AppInstallerUri>\\10.244.64.182\d\Installers\GraphTutorial</AppInstallerUri>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxPackageDir>C:\Users\Will\Desktop\Compile\</AppxPackageDir>
-    <EntryPointProjectUniqueName>..\GraphTutorial\PSS_Schedule.csproj</EntryPointProjectUniqueName>
+    <EntryPointProjectUniqueName>..\PSS_Schedule\PSS_Schedule.csproj</EntryPointProjectUniqueName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <AppxBundle>Always</AppxBundle>
@@ -112,7 +112,7 @@
     <Content Include="Images\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GraphTutorial\PSS_Schedule.csproj" />
+    <ProjectReference Include="..\PSS_Schedule\PSS_Schedule.csproj" />
   </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
 </Project>

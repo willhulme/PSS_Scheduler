@@ -1,6 +1,6 @@
 ﻿<!-- Copyright (c) Microsoft Corporation.
      Licensed under the MIT License. -->
-    
+
 <Page
     x:Class="PSS_Schedule.HomePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -14,8 +14,23 @@
     <!-- <HomePageGridSnippet> -->
     <Grid>
         <StackPanel>
-            <TextBlock FontSize="44" FontWeight="Bold" Margin="0, 12" Text="Hello David"/>
-            <TextBlock x:Name="HomePageMessage"><Run Text="Test test 123"/><LineBreak/><Run/></TextBlock>
+            <TextBlock FontSize="44" FontWeight="Bold" Margin="0, 12" Text="PSS Schedule Administration" SelectionChanged="TextBlock_SelectionChanged"/>
+            <TextBlock x:Name="HomePageMessage_Copy" SelectionChanged="HomePageMessage_Copy_SelectionChanged"><Run Text="Worker 1"/><LineBreak/><Run/></TextBlock>
+            <ToggleSwitch Header="ToggleSwitch"/>
+            <Slider Width="456" Height="34"/>
+            <TextBlock x:Name="HomePageMessage_Copy1"><Run Text="Worker 2"/><LineBreak/><Run/></TextBlock>
+            <ToggleSwitch Header="ToggleSwitch"/>
+            <Slider Width="456" Height="34"/>
+            <TextBlock x:Name="HomePageMessage_Copy2"><Run Text="Worker 3"/><LineBreak/><Run/></TextBlock>
+            <ToggleSwitch Header="ToggleSwitch"/>
+            <Slider Width="456" Height="34"/>
+            <TextBlock x:Name="HomePageMessage_Copy3"><Run Text="Worker 4"/><LineBreak/><Run/></TextBlock>
+            <ToggleSwitch Header="ToggleSwitch"/>
+            <Slider Width="456" Height="34"/>
+            <TextBlock x:Name="HomePageMessage_Copy4"><Run Text="Worker 5"/><LineBreak/><Run/></TextBlock>
+            <ToggleSwitch Header="ToggleSwitch"/>
+            <Slider Width="452" Height="34"/>
+            <TextBlock x:Name="HomePageMessage" SelectionChanged="HomePageMessage_Copy_SelectionChanged"><Run Text="Worker 1"/><LineBreak/><Run/></TextBlock>
         </StackPanel>
     </Grid>
     <!-- </HomePageGridSnippet> -->
